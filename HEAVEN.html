@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>HEAVEN – Premium Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Raleway:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --moody-blue: #1a1a2e;
+  --moody-mid: #16213e;
+  --moody-deep: #0f0f23;
+  --moody-accent: #1e2a4a;
+  --silver: #c8d6e5;
+  --silver-bright: #e8f0f7;
+  --silver-rich: #d4e1ef;
+  --silver-gold: #b8c8d8;
+  --glass-bg: rgba(255,255,255,0.06);
+  --glass-border: rgba(200,214,229,0.18);
+  --glass-hover: rgba(255,255,255,0.1);
+  --glow: rgba(180,200,230,0.3);
+  --accent-blue: #4a90d9;
+  --accent-purple: #6c5ce7;
+  --shadow-deep: 0 8px 32px rgba(0,0,0,0.5);
+  --shadow-glow: 0 0 30px rgba(180,200,230,0.2);
+  --transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'Raleway',sans-serif;
+  background:var(--moody-blue);
+  color:var(--silver);
+  min-height:100vh;
+  overflow-x:hidden;
+  cursor:default;
+}
+/* ═══════════════════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════════════════ */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--moody-deep)}
+::-webkit-scrollbar-thumb{background:linear-gradient(to bottom,#4a90d9,#6c5ce7);border-radius:3px}
+
+/* ═══════════════════════════════════════════════
+   PAGES
+═══════════════════════════════════════════════ */
+.page{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity 0.7s ease, transform 0.7s ease;
+  z-index:10;
+}
+.page.hidden{opacity:0;pointer-events:none;transform:translateY(20px)}
+.page.active{opacity:1;pointer-events:all;transform:translateY(0)}
+
+/* ═══════════════════════════════════════════════
+   BACKGROUND EFFECTS
+═══════════════════════════════════════════════ */
+.bg-orbs{
+  position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+}
+.orb{
+  position:absolute;border-radius:50%;filter:blur(80px);opacity:0.15;animation:orbFloat 12s infinite alternate ease-in-out;
+}
+.orb1{width:500px;height:500px;background:radial-gradient(circle,#4a90d9,transparent);top:-10%;left:-10%;animation-delay:0s}
+.orb2{width:400px;height:400px;background:radial-gradient(circle,#6c5ce7,transparent);bottom:-10%;right:-10%;animation-delay:-4s}
+.orb3{width:300px;height:300px;background:radial-gradient(circle,#2d7dd2,transparent);top:50%;left:50%;animation-delay:-8s}
+@keyframes orbFloat{0%{transform:translate(0,0) scale(1)}100%{transform:translate(40px,40px) scale(1.1)}}
+
+/* Glass tile pattern */
+.bg-grid{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(200,214,229,0.03) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(200,214,229,0.03) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+
+/* ═══════════════════════════════════════════════
+   GLASSMORPHISM CARD
+═══════════════════════════════════════════════ */
+.glass{
+  background:var(--glass-bg);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--glass-border);
+  border-radius:20px;
+  box-shadow:var(--shadow-deep),var(--shadow-glow),inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.glass:hover{
+  border-color:rgba(200,214,229,0.3);
+  box-shadow:var(--shadow-deep),0 0 50px rgba(180,200,230,0.25),inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+/* ═══════════════════════════════════════════════
+   INTRO PAGE
+═══════════════════════════════════════════════ */
+#intro{
+  background:radial-gradient(ellipse at 30% 30%,#1e2a4a 0%,var(--moody-deep) 60%,#0a0a1a 100%);
+}
+.intro-content{
+  z-index:2;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:20px;
+}
+.heaven-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(4rem,14vw,10rem);
+  font-weight:900;
+  letter-spacing:0.25em;
+  display:flex;align-items:center;
+  position:relative;
+}
+.letter-h{
+  background:linear-gradient(135deg,#e8f0f7,#94b4d4,#c8d6e5,#7a9dbf);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 20px rgba(180,200,230,0.6));
+  transform:translateX(200%);opacity:0;
+  animation:slideH 1.2s cubic-bezier(0.22,1,0.36,1) 0.5s forwards;
+  display:inline-block;
+}
+@keyframes slideH{
+  0%{transform:translateX(200%);opacity:0}
+  60%{opacity:1}
+  100%{transform:translateX(0);opacity:1}
+}
+.letters-eaven{
+  background:linear-gradient(135deg,#e8f0f7,#94b4d4,#c8d6e5,#7a9dbf);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 20px rgba(180,200,230,0.6));
+  display:inline-block;overflow:hidden;width:0;
+  animation:expandEaven 1.5s cubic-bezier(0.22,1,0.36,1) 1.8s forwards;
+  white-space:nowrap;
+}
+@keyframes expandEaven{0%{width:0;opacity:0}20%{opacity:1}100%{width:9ch;opacity:1}}
+
+.intro-tagline{
+  font-family:'Raleway',sans-serif;font-weight:300;font-size:clamp(0.85rem,2.5vw,1.1rem);
+  letter-spacing:0.4em;text-transform:uppercase;
+  color:rgba(200,214,229,0.6);
+  opacity:0;animation:fadeUp 1s ease 3.5s forwards;
+}
+.enter-btn{
+  margin-top:20px;opacity:0;
+  animation:fadeUp 1s ease 4s forwards;
+  padding:14px 52px;font-family:'Cinzel',serif;font-size:0.9rem;font-weight:600;
+  letter-spacing:0.25em;text-transform:uppercase;
+  background:linear-gradient(135deg,rgba(200,214,229,0.12),rgba(180,200,230,0.06));
+  border:1px solid rgba(200,214,229,0.35);
+  border-radius:50px;color:var(--silver-bright);cursor:pointer;
+  backdrop-filter:blur(10px);transition:var(--transition);
+  box-shadow:0 0 30px rgba(180,200,230,0.1),inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.enter-btn:hover{
+  background:linear-gradient(135deg,rgba(200,214,229,0.22),rgba(180,200,230,0.15));
+  border-color:rgba(200,214,229,0.6);
+  box-shadow:0 0 50px rgba(180,200,230,0.3),inset 0 1px 0 rgba(255,255,255,0.2);
+  transform:translateY(-3px) scale(1.03);
+}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+
+/* Stars */
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+.star{position:absolute;width:2px;height:2px;background:white;border-radius:50%;animation:twinkle var(--d,3s) infinite alternate ease-in-out}
+@keyframes twinkle{0%{opacity:0.1;transform:scale(1)}100%{opacity:0.8;transform:scale(1.5)}}
+
+/* ═══════════════════════════════════════════════
+   LOGIN PAGE
+═══════════════════════════════════════════════ */
+#login{background:radial-gradient(ellipse at 70% 70%,#1e2a4a 0%,var(--moody-deep) 60%,#0a0a1a 100%)}
+.login-card{
+  width:min(440px,92vw);padding:42px 36px;
+  z-index:2;
+  animation:slideUp 0.7s ease;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+.login-logo{
+  font-family:'Cinzel',serif;font-size:2rem;font-weight:900;letter-spacing:0.3em;
+  background:linear-gradient(135deg,#e8f0f7,#94b4d4,#c8d6e5);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-align:center;margin-bottom:6px;
+  filter:drop-shadow(0 0 12px rgba(180,200,230,0.4));
+}
+.login-sub{text-align:center;font-size:0.8rem;letter-spacing:0.2em;color:rgba(200,214,229,0.5);margin-bottom:30px;text-transform:uppercase}
+.auth-tabs{display:flex;background:rgba(0,0,0,0.2);border-radius:12px;padding:4px;margin-bottom:28px;gap:4px}
+.auth-tab{
+  flex:1;padding:10px;border:none;background:transparent;color:rgba(200,214,229,0.5);
+  font-family:'Raleway',sans-serif;font-size:0.85rem;font-weight:600;letter-spacing:0.08em;
+  cursor:pointer;border-radius:9px;transition:var(--transition);
+}
+.auth-tab.active{
+  background:linear-gradient(135deg,rgba(200,214,229,0.15),rgba(180,200,230,0.08));
+  color:var(--silver-bright);box-shadow:0 2px 10px rgba(0,0,0,0.3);
+}
+.form-group{margin-bottom:18px;position:relative}
+.form-label{display:block;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(200,214,229,0.6);margin-bottom:8px}
+.form-input{
+  width:100%;padding:13px 16px;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(200,214,229,0.15);border-radius:12px;
+  color:var(--silver-bright);font-family:'Raleway',sans-serif;font-size:0.9rem;
+  outline:none;transition:var(--transition);
+  backdrop-filter:blur(5px);
+}
+.form-input:focus{border-color:rgba(200,214,229,0.4);background:rgba(255,255,255,0.08);box-shadow:0 0 20px rgba(180,200,230,0.1)}
+.form-input::placeholder{color:rgba(200,214,229,0.3)}
+.btn-primary{
+  width:100%;padding:14px;margin-top:6px;
+  background:linear-gradient(135deg,rgba(74,144,217,0.7),rgba(108,92,231,0.7));
+  border:1px solid rgba(200,214,229,0.25);border-radius:12px;
+  color:white;font-family:'Cinzel',serif;font-size:0.85rem;font-weight:600;letter-spacing:0.15em;
+  cursor:pointer;transition:var(--transition);
+  backdrop-filter:blur(10px);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(74,144,217,0.4);filter:brightness(1.1)}
+.divider{text-align:center;margin:20px 0;position:relative;color:rgba(200,214,229,0.35);font-size:0.78rem;letter-spacing:0.1em}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:rgba(200,214,229,0.12)}
+.divider::before{left:0}.divider::after{right:0}
+.google-btn{
+  width:100%;padding:13px;display:flex;align-items:center;justify-content:center;gap:10px;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(200,214,229,0.18);border-radius:12px;
+  color:var(--silver);font-family:'Raleway',sans-serif;font-size:0.9rem;font-weight:500;
+  cursor:pointer;transition:var(--transition);
+}
+.google-btn:hover{background:rgba(255,255,255,0.12);border-color:rgba(200,214,229,0.35);transform:translateY(-1px)}
+.google-icon{width:20px;height:20px}
+
+/* ═══════════════════════════════════════════════
+   MAIN APP
+═══════════════════════════════════════════════ */
+#main{
+  position:fixed;inset:0;
+  display:none;flex-direction:column;
+  background:radial-gradient(ellipse at 20% 20%,#1e2a4a 0%,var(--moody-deep) 50%,#0a0a1a 100%);
+  z-index:10;overflow:hidden;
+}
+#main.active{display:flex;opacity:1;pointer-events:all;transform:none}
+
+/* TICKER */
+.ticker-bar{
+  width:100%;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(200,214,229,0.1);
+  padding:8px 0;overflow:hidden;flex-shrink:0;
+  backdrop-filter:blur(10px);
+}
+.ticker-track{
+  display:flex;gap:0;width:max-content;
+  animation:tickerScroll 30s linear infinite;
+}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{
+  padding:0 40px;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:rgba(200,214,229,0.7);white-space:nowrap;display:flex;align-items:center;gap:10px;
+}
+.ticker-item.hot{color:#f0a500}
+.ticker-sep{color:rgba(200,214,229,0.25);margin:0 10px}
+
+/* HEADER */
+.app-header{
+  display:flex;align-items:center;justify-content:space-between;padding:12px 20px;
+  background:rgba(255,255,255,0.04);border-bottom:1px solid var(--glass-border);
+  backdrop-filter:blur(20px);flex-shrink:0;flex-wrap:wrap;gap:10px;
+  position:relative;z-index:100;
+}
+.header-logo{
+  font-family:'Cinzel',serif;font-size:1.4rem;font-weight:900;letter-spacing:0.25em;
+  background:linear-gradient(135deg,#e8f0f7,#94b4d4);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 10px rgba(180,200,230,0.4));
+  cursor:pointer;
+}
+.search-wrap{
+  flex:1;max-width:380px;min-width:120px;
+  display:flex;align-items:center;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(200,214,229,0.15);border-radius:25px;
+  padding:0 16px;gap:8px;
+}
+.search-wrap input{
+  flex:1;background:none;border:none;outline:none;color:var(--silver);font-family:'Raleway',sans-serif;font-size:0.85rem;padding:9px 0;
+}
+.search-wrap input::placeholder{color:rgba(200,214,229,0.3)}
+.search-icon{opacity:0.4;font-size:0.9rem}
+.header-actions{display:flex;align-items:center;gap:8px}
+.icon-btn{
+  width:38px;height:38px;border-radius:50%;border:1px solid rgba(200,214,229,0.2);
+  background:rgba(255,255,255,0.05);color:var(--silver);font-size:1rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:var(--transition);position:relative;
+  backdrop-filter:blur(10px);
+}
+.icon-btn:hover{background:rgba(255,255,255,0.12);border-color:rgba(200,214,229,0.4);transform:scale(1.1)}
+.badge{
+  position:absolute;top:-4px;right:-4px;
+  width:18px;height:18px;border-radius:50%;
+  background:linear-gradient(135deg,#4a90d9,#6c5ce7);
+  font-size:0.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;
+  color:white;
+}
+.avatar-btn{
+  width:36px;height:36px;border-radius:50%;overflow:hidden;border:2px solid rgba(200,214,229,0.3);cursor:pointer;
+  background:linear-gradient(135deg,#4a90d9,#6c5ce7);
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  transition:var(--transition);
+}
+.avatar-btn:hover{border-color:rgba(200,214,229,0.7);transform:scale(1.05)}
+.avatar-btn img{width:100%;height:100%;object-fit:cover}
+
+/* CATEGORY NAV */
+.cat-nav{
+  display:flex;gap:6px;padding:12px 20px;overflow-x:auto;flex-shrink:0;
+  background:rgba(0,0,0,0.2);border-bottom:1px solid rgba(200,214,229,0.07);
+  scrollbar-width:none;
+}
+.cat-nav::-webkit-scrollbar{display:none}
+.cat-btn{
+  padding:7px 18px;border-radius:25px;border:1px solid rgba(200,214,229,0.15);
+  background:rgba(255,255,255,0.04);color:rgba(200,214,229,0.6);
+  font-family:'Raleway',sans-serif;font-size:0.78rem;font-weight:600;letter-spacing:0.08em;
+  cursor:pointer;transition:var(--transition);white-space:nowrap;
+}
+.cat-btn:hover,.cat-btn.active{
+  background:linear-gradient(135deg,rgba(74,144,217,0.25),rgba(108,92,231,0.2));
+  border-color:rgba(200,214,229,0.4);color:var(--silver-bright);
+}
+
+/* MAIN CONTENT */
+.app-body{
+  flex:1;overflow-y:auto;overflow-x:hidden;padding:20px;
+  display:flex;flex-direction:column;gap:24px;
+  scrollbar-width:thin;
+}
+
+/* HERO BANNER */
+.hero-banner{
+  border-radius:20px;padding:32px 28px;
+  background:linear-gradient(135deg,rgba(74,144,217,0.25),rgba(108,92,231,0.2),rgba(180,200,230,0.1));
+  border:1px solid rgba(200,214,229,0.2);
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  animation:heroIn 0.8s ease;
+}
+@keyframes heroIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero-banner::before{
+  content:'';position:absolute;top:-50%;right:-20%;width:300px;height:300px;
+  background:radial-gradient(circle,rgba(74,144,217,0.15),transparent);border-radius:50%;
+}
+.hero-text h2{font-family:'Cinzel',serif;font-size:clamp(1.3rem,4vw,2rem);font-weight:700;color:var(--silver-bright);margin-bottom:8px;line-height:1.2}
+.hero-text p{color:rgba(200,214,229,0.65);font-size:0.85rem;margin-bottom:16px}
+.hero-coupon{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(240,165,0,0.15);border:1px solid rgba(240,165,0,0.4);border-radius:8px;
+  padding:6px 14px;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;color:#f0a500;
+}
+.hero-img{font-size:clamp(3rem,10vw,5rem);flex-shrink:0;animation:floatHero 3s ease-in-out infinite alternate}
+@keyframes floatHero{0%{transform:translateY(0)}100%{transform:translateY(-10px)}}
+.shop-now-btn{
+  margin-top:14px;padding:10px 26px;border-radius:25px;
+  background:linear-gradient(135deg,rgba(74,144,217,0.6),rgba(108,92,231,0.5));
+  border:1px solid rgba(200,214,229,0.3);color:white;font-family:'Cinzel',serif;
+  font-size:0.8rem;font-weight:600;letter-spacing:0.15em;cursor:pointer;
+  transition:var(--transition);display:inline-block;
+}
+.shop-now-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(74,144,217,0.4)}
+
+/* SECTION TITLE */
+.section-title{
+  font-family:'Cinzel',serif;font-size:1rem;font-weight:700;letter-spacing:0.2em;
+  color:var(--silver-rich);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.section-title::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(200,214,229,0.2),transparent)}
+
+/* PRODUCT GRID */
+.products-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(min(160px,100%),1fr));
+  gap:14px;
+}
+.product-card{
+  background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;
+  overflow:hidden;cursor:pointer;transition:var(--transition);
+  backdrop-filter:blur(12px);
+  animation:cardIn 0.5s ease both;
+}
+.product-card:hover{
+  transform:translateY(-6px) scale(1.02);
+  border-color:rgba(200,214,229,0.35);
+  box-shadow:0 12px 40px rgba(0,0,0,0.4),0 0 30px rgba(180,200,230,0.12);
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.card-img{
+  height:130px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;
+  background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));
+  position:relative;overflow:hidden;
+}
+.card-img::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 80%,rgba(74,144,217,0.1),transparent);
+}
+.card-wish{
+  position:absolute;top:8px;right:8px;width:28px;height:28px;
+  border-radius:50%;background:rgba(0,0,0,0.4);border:1px solid rgba(200,214,229,0.2);
+  display:flex;align-items:center;justify-content:center;font-size:0.8rem;
+  cursor:pointer;transition:var(--transition);z-index:2;
+}
+.card-wish.active{background:rgba(231,76,60,0.3);border-color:rgba(231,76,60,0.5);color:#e74c3c}
+.card-wish:hover{transform:scale(1.2)}
+.card-body{padding:12px}
+.card-name{font-size:0.82rem;font-weight:600;color:var(--silver-bright);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-brand{font-size:0.7rem;color:rgba(200,214,229,0.4);margin-bottom:8px}
+.card-price{font-family:'Cinzel',serif;font-size:0.95rem;font-weight:700;color:#4a90d9}
+.card-old{font-size:0.72rem;color:rgba(200,214,229,0.3);text-decoration:line-through;margin-left:5px}
+.card-rating{font-size:0.7rem;color:#f0a500;margin-top:4px}
+.add-cart-btn{
+  width:100%;margin-top:10px;padding:8px;border-radius:8px;
+  background:linear-gradient(135deg,rgba(74,144,217,0.3),rgba(108,92,231,0.25));
+  border:1px solid rgba(200,214,229,0.2);color:var(--silver-bright);
+  font-family:'Raleway',sans-serif;font-size:0.75rem;font-weight:600;
+  cursor:pointer;transition:var(--transition);
+}
+.add-cart-btn:hover{background:linear-gradient(135deg,rgba(74,144,217,0.5),rgba(108,92,231,0.4));transform:translateY(-1px)}
+
+/* ═══════════════════════════════════════════════
+   SIDEBAR PANELS
+═══════════════════════════════════════════════ */
+.panel-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);
+  z-index:200;opacity:0;pointer-events:none;transition:opacity 0.3s;
+}
+.panel-overlay.show{opacity:1;pointer-events:all}
+.side-panel{
+  position:fixed;top:0;right:-100%;width:min(420px,100vw);height:100%;
+  background:linear-gradient(160deg,rgba(20,25,45,0.98),rgba(10,10,25,0.99));
+  border-left:1px solid rgba(200,214,229,0.12);
+  z-index:300;transition:right 0.4s cubic-bezier(0.22,1,0.36,1);
+  display:flex;flex-direction:column;
+  backdrop-filter:blur(30px);
+  overflow:hidden;
+}
+.side-panel.open{right:0}
+.panel-header{
+  padding:20px;border-bottom:1px solid rgba(200,214,229,0.1);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.panel-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;letter-spacing:0.2em;color:var(--silver-bright)}
+.panel-close{
+  width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.07);
+  border:1px solid rgba(200,214,229,0.15);color:var(--silver);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:var(--transition);
+}
+.panel-close:hover{background:rgba(255,255,255,0.15);transform:rotate(90deg)}
+.panel-body{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px}
+.panel-footer{padding:16px 20px;border-top:1px solid rgba(200,214,229,0.1);flex-shrink:0}
+
+/* CART ITEM */
+.cart-item{
+  display:flex;align-items:center;gap:12px;padding:14px;
+  background:rgba(255,255,255,0.04);border:1px solid rgba(200,214,229,0.1);border-radius:14px;
+  transition:var(--transition);
+}
+.cart-item:hover{background:rgba(255,255,255,0.07)}
+.cart-img{font-size:2rem;width:50px;height:50px;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.04);border-radius:10px;flex-shrink:0}
+.cart-info{flex:1}
+.cart-name{font-size:0.85rem;font-weight:600;color:var(--silver-bright)}
+.cart-price{font-family:'Cinzel',serif;font-size:0.9rem;color:#4a90d9}
+.qty-ctrl{display:flex;align-items:center;gap:8px;margin-top:6px}
+.qty-btn{
+  width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,0.07);
+  border:1px solid rgba(200,214,229,0.15);color:var(--silver);cursor:pointer;
+  font-size:0.9rem;transition:var(--transition);display:flex;align-items:center;justify-content:center;
+}
+.qty-btn:hover{background:rgba(255,255,255,0.15)}
+.qty-num{font-size:0.85rem;font-weight:700;min-width:20px;text-align:center}
+.remove-btn{
+  background:rgba(231,76,60,0.15);border:1px solid rgba(231,76,60,0.25);border-radius:8px;
+  color:#e74c3c;cursor:pointer;padding:6px 10px;font-size:0.75rem;transition:var(--transition);
+}
+.remove-btn:hover{background:rgba(231,76,60,0.3)}
+
+/* COUPON */
+.coupon-section{margin-bottom:10px}
+.coupon-row{display:flex;gap:8px}
+.coupon-input{
+  flex:1;padding:11px 14px;background:rgba(255,255,255,0.05);border:1px solid rgba(200,214,229,0.15);
+  border-radius:10px;color:var(--silver-bright);font-family:'Raleway',sans-serif;font-size:0.85rem;outline:none;
+}
+.coupon-input:focus{border-color:rgba(200,214,229,0.35)}
+.apply-btn{
+  padding:11px 18px;border-radius:10px;background:linear-gradient(135deg,rgba(74,144,217,0.5),rgba(108,92,231,0.4));
+  border:1px solid rgba(200,214,229,0.25);color:white;font-family:'Raleway',sans-serif;
+  font-size:0.8rem;font-weight:600;cursor:pointer;transition:var(--transition);white-space:nowrap;
+}
+.apply-btn:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(74,144,217,0.3)}
+.coupon-success{color:#27ae60;font-size:0.78rem;margin-top:6px;display:none}
+.cart-total-area{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(200,214,229,0.12);border-radius:12px;padding:14px;
+}
+.total-row{display:flex;justify-content:space-between;font-size:0.82rem;color:rgba(200,214,229,0.7);margin-bottom:8px}
+.total-row.big{font-family:'Cinzel',serif;font-size:1rem;color:var(--silver-bright);font-weight:700;border-top:1px solid rgba(200,214,229,0.1);padding-top:10px;margin-top:4px}
+
+/* CHECKOUT / BILL */
+.bill-section{background:rgba(255,255,255,0.03);border:1px solid rgba(200,214,229,0.1);border-radius:14px;padding:16px}
+.bill-title{font-family:'Cinzel',serif;font-size:0.85rem;font-weight:700;letter-spacing:0.15em;color:var(--silver-rich);margin-bottom:12px}
+.bill-item-row{display:flex;justify-content:space-between;font-size:0.8rem;color:rgba(200,214,229,0.65);padding:5px 0;border-bottom:1px dashed rgba(200,214,229,0.07)}
+.payment-methods{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.pay-method{
+  padding:12px;border-radius:10px;border:1px solid rgba(200,214,229,0.15);
+  background:rgba(255,255,255,0.04);cursor:pointer;text-align:center;transition:var(--transition);
+}
+.pay-method:hover,.pay-method.active{border-color:rgba(74,144,217,0.5);background:rgba(74,144,217,0.1)}
+.pay-method .pay-icon{font-size:1.4rem;margin-bottom:4px}
+.pay-method .pay-name{font-size:0.72rem;color:rgba(200,214,229,0.7)}
+.pay-btn{
+  width:100%;margin-top:14px;padding:14px;border-radius:12px;
+  background:linear-gradient(135deg,#4a90d9,#6c5ce7);
+  border:none;color:white;font-family:'Cinzel',serif;font-size:0.85rem;
+  font-weight:700;letter-spacing:0.15em;cursor:pointer;transition:var(--transition);
+}
+.pay-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(74,144,217,0.5)}
+
+/* ═══════════════════════════════════════════════
+   AI CHATBOT – NEST
+═══════════════════════════════════════════════ */
+.chat-fab{
+  position:fixed;bottom:24px;right:24px;
+  width:56px;height:56px;border-radius:50%;z-index:400;
+  background:linear-gradient(135deg,#4a90d9,#6c5ce7);
+  border:2px solid rgba(200,214,229,0.3);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+  box-shadow:0 6px 30px rgba(74,144,217,0.5);
+  transition:var(--transition);animation:pulse 2s ease-in-out infinite;
+}
+.chat-fab:hover{transform:scale(1.1);box-shadow:0 10px 40px rgba(74,144,217,0.6)}
+@keyframes pulse{0%,100%{box-shadow:0 6px 30px rgba(74,144,217,0.5)}50%{box-shadow:0 6px 40px rgba(74,144,217,0.8),0 0 20px rgba(108,92,231,0.4)}}
+
+.chat-window{
+  position:fixed;bottom:90px;right:20px;width:min(360px,94vw);
+  height:480px;z-index:400;border-radius:20px;
+  background:linear-gradient(160deg,rgba(20,25,45,0.97),rgba(10,10,25,0.98));
+  border:1px solid rgba(200,214,229,0.15);
+  display:flex;flex-direction:column;overflow:hidden;
+  transform:scale(0.8) translateY(20px);opacity:0;pointer-events:none;
+  transition:all 0.35s cubic-bezier(0.22,1,0.36,1);
+  backdrop-filter:blur(30px);
+  box-shadow:0 20px 60px rgba(0,0,0,0.6);
+}
+.chat-window.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+.chat-head{
+  padding:14px 16px;border-bottom:1px solid rgba(200,214,229,0.1);
+  display:flex;align-items:center;gap:10px;flex-shrink:0;
+}
+.nest-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,#4a90d9,#6c5ce7);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+  box-shadow:0 0 12px rgba(74,144,217,0.5);
+}
+.nest-info .name{font-family:'Cinzel',serif;font-size:0.88rem;font-weight:700;color:var(--silver-bright)}
+.nest-info .status{font-size:0.68rem;color:#27ae60;display:flex;align-items:center;gap:4px}
+.status-dot{width:6px;height:6px;border-radius:50%;background:#27ae60;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.chat-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin}
+.msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:0.82rem;line-height:1.5;animation:msgIn 0.3s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg.bot{align-self:flex-start;background:rgba(255,255,255,0.07);border:1px solid rgba(200,214,229,0.1);border-radius:4px 14px 14px 14px;color:var(--silver)}
+.msg.user{align-self:flex-end;background:linear-gradient(135deg,rgba(74,144,217,0.4),rgba(108,92,231,0.35));border:1px solid rgba(200,214,229,0.2);border-radius:14px 4px 14px 14px;color:var(--silver-bright)}
+.chat-input-row{
+  display:flex;gap:8px;padding:12px 14px;border-top:1px solid rgba(200,214,229,0.1);flex-shrink:0;
+}
+.chat-input{
+  flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(200,214,229,0.15);border-radius:25px;
+  padding:10px 16px;color:var(--silver-bright);font-family:'Raleway',sans-serif;font-size:0.82rem;outline:none;
+}
+.chat-input::placeholder{color:rgba(200,214,229,0.3)}
+.chat-send{
+  width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#4a90d9,#6c5ce7);
+  border:none;color:white;cursor:pointer;font-size:0.9rem;transition:var(--transition);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.chat-send:hover{transform:scale(1.1)}
+.typing{display:flex;gap:4px;padding:4px 0}
+.typing span{width:6px;height:6px;background:rgba(200,214,229,0.5);border-radius:50%;animation:typingDot 1.2s infinite}
+.typing span:nth-child(2){animation-delay:0.2s}.typing span:nth-child(3){animation-delay:0.4s}
+@keyframes typingDot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+
+/* ═══════════════════════════════════════════════
+   SETTINGS PANEL
+═══════════════════════════════════════════════ */
+.settings-toggle{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(200,214,229,0.1);
+  border-radius:12px;margin-bottom:8px;
+}
+.settings-toggle .sett-label{font-size:0.85rem;color:var(--silver)}
+.toggle-sw{
+  width:44px;height:24px;border-radius:12px;background:rgba(200,214,229,0.15);
+  border:1px solid rgba(200,214,229,0.2);position:relative;cursor:pointer;transition:var(--transition);
+}
+.toggle-sw.on{background:linear-gradient(135deg,#4a90d9,#6c5ce7)}
+.toggle-knob{
+  position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;
+  background:white;transition:var(--transition);box-shadow:0 2px 6px rgba(0,0,0,0.3);
+}
+.toggle-sw.on .toggle-knob{left:22px}
+
+/* PROFILE PANEL */
+.profile-area{text-align:center;padding:20px 0}
+.profile-pic-big{
+  width:90px;height:90px;border-radius:50%;margin:0 auto 12px;
+  background:linear-gradient(135deg,#4a90d9,#6c5ce7);
+  display:flex;align-items:center;justify-content:center;font-size:2.5rem;
+  border:3px solid rgba(200,214,229,0.3);cursor:pointer;position:relative;overflow:hidden;
+  transition:var(--transition);
+}
+.profile-pic-big:hover{border-color:rgba(200,214,229,0.6);transform:scale(1.05)}
+.profile-pic-big img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.profile-edit-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,0.5);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:var(--transition);font-size:1.2rem;
+}
+.profile-pic-big:hover .profile-edit-overlay{opacity:1}
+.profile-name{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--silver-bright);margin-bottom:4px}
+.profile-email{font-size:0.78rem;color:rgba(200,214,229,0.45)}
+
+/* NOTIFICATION TOAST */
+.toast{
+  position:fixed;top:80px;right:20px;z-index:9999;
+  padding:12px 20px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(39,174,96,0.3),rgba(27,119,65,0.3));
+  border:1px solid rgba(39,174,96,0.4);color:#27ae60;font-size:0.82rem;font-weight:600;
+  transform:translateX(100%);opacity:0;transition:all 0.4s cubic-bezier(0.22,1,0.36,1);
+  backdrop-filter:blur(10px);
+  box-shadow:0 6px 20px rgba(0,0,0,0.3);
+}
+.toast.show{transform:translateX(0);opacity:1}
+
+/* RESPONSIVE TWEAKS */
+@media(max-width:480px){
+  .app-header{padding:10px 14px}
+  .header-logo{font-size:1.1rem}
+  .app-body{padding:14px}
+  .hero-banner{flex-direction:column;text-align:center;padding:22px 18px}
+  .products-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+  .chat-window{bottom:80px;right:10px;width:94vw}
+  .side-panel{width:100vw}
+}
+@media(min-width:1024px){
+  .products-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
+  .app-body{padding:24px 32px}
+  .app-header{padding:14px 32px}
+  .cat-nav{padding:12px 32px}
+}
+</style>
+</head>
+<body>
+
+<!-- Background Effects -->
+<div class="bg-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+<div class="bg-grid"></div>
+<div class="stars" id="starsLayer"></div>
+
+<!-- ══════════════════════════════════════
+     INTRO PAGE
+══════════════════════════════════════ -->
+<div id="intro" class="page active">
+  <div class="intro-content">
+    <div class="heaven-title">
+      <span class="letter-h">H</span><span class="letters-eaven">EAVEN</span>
+    </div>
+    <p class="intro-tagline">Premium · Curated · Elevating Life</p>
+    <button class="enter-btn" onclick="showLogin()">Enter Store</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     LOGIN PAGE
+══════════════════════════════════════ -->
+<div id="login" class="page hidden">
+  <div class="glass login-card">
+    <div class="login-logo">HEAVEN</div>
+    <div class="login-sub">Your Premium Shopping Destination</div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchTab('signin')">Sign In</button>
+      <button class="auth-tab" onclick="switchTab('create')">Create Account</button>
+    </div>
+    <!-- SIGN IN FORM -->
+    <div id="signInForm">
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" type="email" placeholder="you@example.com" id="emailInput">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" placeholder="••••••••" id="passInput">
+      </div>
+      <button class="btn-primary" onclick="doLogin()">Sign In to Heaven</button>
+      <div class="divider">or continue with</div>
+      <button class="google-btn" onclick="doLogin()">
+        <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Continue with Google
+      </button>
+    </div>
+    <!-- CREATE ACCOUNT FORM -->
+    <div id="createForm" style="display:none">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input class="form-input" type="text" placeholder="Your Name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" type="email" placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" placeholder="Create a strong password">
+      </div>
+      <button class="btn-primary" onclick="doLogin()">Create Account</button>
+      <div class="divider">or</div>
+      <button class="google-btn" onclick="doLogin()">
+        <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Sign Up with Google
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MAIN APP
+══════════════════════════════════════ -->
+<div id="main">
+
+  <!-- Ticker -->
+  <div class="ticker-bar">
+    <div class="ticker-track" id="ticker"></div>
+  </div>
+
+  <!-- Header -->
+  <div class="app-header">
+    <div class="header-logo">HEAVEN</div>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Search products…" id="searchInput" oninput="filterProducts()">
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="openPanel('wishPanel')" title="Wishlist">
+        ❤️<span class="badge" id="wishBadge">0</span>
+      </button>
+      <button class="icon-btn" onclick="openPanel('cartPanel')" title="Cart">
+        🛒<span class="badge" id="cartBadge">0</span>
+      </button>
+      <button class="icon-btn" onclick="openPanel('settingsPanel')" title="Settings">⚙️</button>
+      <div class="avatar-btn" onclick="openPanel('profilePanel')" id="avatarBtn">👤</div>
+    </div>
+  </div>
+
+  <!-- Category Nav -->
+  <div class="cat-nav">
+    <button class="cat-btn active" onclick="filterCat('all',this)">All</button>
+    <button class="cat-btn" onclick="filterCat('watch',this)">⌚ Watches</button>
+    <button class="cat-btn" onclick="filterCat('mobile',this)">📱 Mobiles</button>
+    <button class="cat-btn" onclick="filterCat('ac',this)">❄️ Air Conditioners</button>
+    <button class="cat-btn" onclick="filterCat('laptop',this)">💻 Laptops</button>
+    <button class="cat-btn" onclick="filterCat('headphone',this)">🎧 Headphones</button>
+    <button class="cat-btn" onclick="filterCat('camera',this)">📷 Cameras</button>
+    <button class="cat-btn" onclick="filterCat('tv',this)">📺 Smart TVs</button>
+    <button class="cat-btn" onclick="filterCat('tablet',this)">📲 Tablets</button>
+  </div>
+
+  <!-- Body -->
+  <div class="app-body" id="appBody">
+    <!-- Hero -->
+    <div class="hero-banner">
+      <div class="hero-text">
+        <h2>Elevate Your<br>Lifestyle Today</h2>
+        <p>Premium gadgets, premium life. Up to 40% off on top brands.</p>
+        <div class="hero-coupon">🏷️ HEAVEN45 → 18% OFF · Ends May 30</div>
+        <button class="shop-now-btn" onclick="document.getElementById('productsSection').scrollIntoView({behavior:'smooth'})">Shop Now →</button>
+      </div>
+      <div class="hero-img">✨</div>
+    </div>
+
+    <!-- Products -->
+    <div id="productsSection">
+      <div class="section-title">Featured Products</div>
+      <div class="products-grid" id="productsGrid"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     PANELS
+══════════════════════════════════════ -->
+<div class="panel-overlay" id="overlay" onclick="closePanels()"></div>
+
+<!-- CART PANEL -->
+<div class="side-panel" id="cartPanel">
+  <div class="panel-header">
+    <div class="panel-title">🛒 Shopping Cart</div>
+    <button class="panel-close" onclick="closePanels()">✕</button>
+  </div>
+  <div class="panel-body" id="cartBody"></div>
+  <div class="panel-footer">
+    <div class="coupon-section">
+      <label style="font-size:0.75rem;letter-spacing:0.1em;color:rgba(200,214,229,0.5);text-transform:uppercase;display:block;margin-bottom:6px">Discount Coupon</label>
+      <div class="coupon-row">
+        <input class="coupon-input" id="couponInput" placeholder="Enter code e.g. HEAVEN45" oninput="this.value=this.value.toUpperCase()">
+        <button class="apply-btn" onclick="applyCoupon()">Apply</button>
+      </div>
+      <div class="coupon-success" id="couponSuccess">✓ HEAVEN45 applied — 18% discount!</div>
+    </div>
+    <div class="cart-total-area" id="cartTotal"></div>
+    <button class="btn-primary" style="margin-top:12px" onclick="openCheckout()">Proceed to Checkout →</button>
+  </div>
+</div>
+
+<!-- CHECKOUT PANEL -->
+<div class="side-panel" id="checkoutPanel">
+  <div class="panel-header">
+    <div class="panel-title">💳 Checkout</div>
+    <button class="panel-close" onclick="closePanels()">✕</button>
+  </div>
+  <div class="panel-body">
+    <div class="bill-section" id="billSection"></div>
+    <div style="margin-top:16px">
+      <div class="section-title" style="font-size:0.8rem">Payment Method</div>
+      <div class="payment-methods">
+        <div class="pay-method active" onclick="selectPay(this)"><div class="pay-icon">💳</div><div class="pay-name">Card</div></div>
+        <div class="pay-method" onclick="selectPay(this)"><div class="pay-icon">📱</div><div class="pay-name">UPI / GPay</div></div>
+        <div class="pay-method" onclick="selectPay(this)"><div class="pay-icon">🏦</div><div class="pay-name">Net Banking</div></div>
+        <div class="pay-method" onclick="selectPay(this)"><div class="pay-icon">💵</div><div class="pay-name">Cash on Delivery</div></div>
+      </div>
+    </div>
+    <div id="cardDetails" style="margin-top:14px">
+      <div class="form-group"><label class="form-label">Card Number</label><input class="form-input" placeholder="•••• •••• •••• ••••" maxlength="19" oninput="fmtCard(this)"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="form-group"><label class="form-label">Expiry</label><input class="form-input" placeholder="MM/YY"></div>
+        <div class="form-group"><label class="form-label">CVV</label><input class="form-input" placeholder="•••" maxlength="3"></div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <button class="pay-btn" onclick="completePay()">Pay Now 🔒</button>
+  </div>
+</div>
+
+<!-- WISHLIST PANEL -->
+<div class="side-panel" id="wishPanel">
+  <div class="panel-header">
+    <div class="panel-title">❤️ Wishlist</div>
+    <button class="panel-close" onclick="closePanels()">✕</button>
+  </div>
+  <div class="panel-body" id="wishBody">
+    <p style="color:rgba(200,214,229,0.4);text-align:center;padding:30px 0;font-size:0.85rem">Your wishlist is empty.<br>Tap ❤️ on any product!</p>
+  </div>
+</div>
+
+<!-- SETTINGS PANEL -->
+<div class="side-panel" id="settingsPanel">
+  <div class="panel-header">
+    <div class="panel-title">⚙️ Settings</div>
+    <button class="panel-close" onclick="closePanels()">✕</button>
+  </div>
+  <div class="panel-body">
+    <div class="settings-toggle">
+      <span class="sett-label">🔔 Notifications</span>
+      <div class="toggle-sw on" onclick="toggleSw(this)"><div class="toggle-knob"></div></div>
+    </div>
+    <div class="settings-toggle">
+      <span class="sett-label">🌙 Dark Mode</span>
+      <div class="toggle-sw on" onclick="toggleSw(this)"><div class="toggle-knob"></div></div>
+    </div>
+    <div class="settings-toggle">
+      <span class="sett-label">✨ Animations</span>
+      <div class="toggle-sw on" onclick="toggleSw(this)"><div class="toggle-knob"></div></div>
+    </div>
+    <div class="settings-toggle">
+      <span class="sett-label">🌐 Language: English</span>
+      <div class="toggle-sw" onclick="toggleSw(this)"><div class="toggle-knob"></div></div>
+    </div>
+    <div class="settings-toggle">
+      <span class="sett-label">🔒 Two-Factor Auth</span>
+      <div class="toggle-sw" onclick="toggleSw(this)"><div class="toggle-knob"></div></div>
+    </div>
+    <div class="settings-toggle">
+      <span class="sett-label">📦 Order Tracking Alerts</span>
+      <div class="toggle-sw on" onclick="toggleSw(this)"><div class="toggle-knob"></div></div>
+    </div>
+    <div style="margin-top:20px">
+      <div class="section-title" style="font-size:0.78rem">Account</div>
+      <button class="btn-primary" onclick="openPanel('profilePanel')" style="margin-bottom:8px">Edit Profile</button>
+      <button style="width:100%;padding:12px;border-radius:10px;background:rgba(231,76,60,0.1);border:1px solid rgba(231,76,60,0.25);color:#e74c3c;font-family:'Raleway',sans-serif;font-size:0.85rem;cursor:pointer" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE PANEL -->
+<div class="side-panel" id="profilePanel">
+  <div class="panel-header">
+    <div class="panel-title">👤 My Profile</div>
+    <button class="panel-close" onclick="closePanels()">✕</button>
+  </div>
+  <div class="panel-body">
+    <div class="profile-area">
+      <div class="profile-pic-big" id="profilePic" onclick="document.getElementById('imgUpload').click()">
+        <span id="profileEmoji">👤</span>
+        <img id="profileImg" src="" alt="" style="display:none">
+        <div class="profile-edit-overlay">📷</div>
+      </div>
+      <input type="file" id="imgUpload" accept="image/*" style="display:none" onchange="uploadImg(this)">
+      <div class="profile-name" id="profileName">Heaven User</div>
+      <div class="profile-email" id="profileEmail">user@heaven.store</div>
+    </div>
+    <div class="form-group"><label class="form-label">Display Name</label><input class="form-input" id="editName" placeholder="Your name" value="Heaven User"></div>
+    <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="editEmail" placeholder="Email" value="user@heaven.store"></div>
+    <div class="form-group"><label class="form-label">Phone</label><input class="form-input" placeholder="+91 •••• ••••••"></div>
+    <div class="form-group"><label class="form-label">Address</label><input class="form-input" placeholder="Delivery address"></div>
+    <button class="btn-primary" onclick="saveProfile()">Save Changes</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     AI CHATBOT – NEST
+══════════════════════════════════════ -->
+<div class="chat-fab" id="chatFab" onclick="toggleChat()" style="display:none" title="Chat with Nest AI">🤖</div>
+<div class="chat-window" id="chatWindow">
+  <div class="chat-head">
+    <div class="nest-avatar">🤖</div>
+    <div class="nest-info">
+      <div class="name">Nest AI</div>
+      <div class="status"><span class="status-dot"></span> Online — Always Here to Help</div>
+    </div>
+    <button class="panel-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs"></div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chatInput" placeholder="Ask Nest anything…" onkeydown="if(event.key==='Enter')sendMsg()">
+    <button class="chat-send" onclick="sendMsg()">➤</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<script>
+// ─── Stars ───────────────────────────────
+(function(){
+  const layer = document.getElementById('starsLayer');
+  for(let i=0;i<80;i++){
+    const s=document.createElement('div');
+    s.className='star';
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;
+      --d:${2+Math.random()*4}s;opacity:${0.1+Math.random()*0.6};
+      animation-delay:${-Math.random()*4}s`;
+    layer.appendChild(s);
+  }
+})();
+
+// ─── Page Nav ─────────────────────────────
+function showLogin(){
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('intro').classList.remove('active');
+  document.getElementById('login').classList.remove('hidden');
+  document.getElementById('login').classList.add('active');
+}
+function switchTab(tab){
+  document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('signInForm').style.display = tab==='signin'?'block':'none';
+  document.getElementById('createForm').style.display  = tab==='create'?'block':'none';
+}
+function doLogin(){
+  document.getElementById('login').classList.add('hidden');
+  document.getElementById('login').classList.remove('active');
+  const main = document.getElementById('main');
+  main.style.display='flex';
+  requestAnimationFrame(()=>{
+    main.classList.add('active');
+    document.getElementById('chatFab').style.display='flex';
+    renderProducts();
+    buildTicker();
+    addBotMsg("Hi! I'm Nest 🤖 — your Heaven AI assistant. Ask me about products, deals, or anything!");
+  });
+}
+function logout(){
+  closePanels();
+  document.getElementById('main').style.display='none';
+  document.getElementById('main').classList.remove('active');
+  document.getElementById('chatFab').style.display='none';
+  document.getElementById('chatWindow').classList.remove('open');
+  document.getElementById('login').classList.remove('hidden');
+  document.getElementById('login').classList.add('active');
+}
+
+// ─── Ticker ───────────────────────────────
+function buildTicker(){
+  const items=[
+    {t:'🔥 Flash Sale: Apple iPhone 16 Pro — 22% OFF',hot:true},
+    {t:'⌚ Rolex Submariner — Limited Stock'},
+    {t:'❄️ Samsung Inverter AC — Best Price of Season',hot:true},
+    {t:'💻 Dell XPS 15 — ₹15,000 Instant Cashback'},
+    {t:'🎧 Sony WH-1000XM6 — Just Arrived'},
+    {t:'🏷️ Use Coupon HEAVEN45 for 18% OFF · Ends May 30',hot:true},
+    {t:'📺 LG OLED 65" — Free Wall Mount'},
+    {t:'📷 Canon EOS R50 — 3 Year Warranty'},
+    {t:'📲 iPad Air M3 — EMI Starts ₹2,499/mo'},
+  ];
+  const track = document.getElementById('ticker');
+  const html = [...items,...items].map(i=>
+    `<span class="ticker-item${i.hot?' hot':''}">${i.t}<span class="ticker-sep">●</span></span>`
+  ).join('');
+  track.innerHTML=html;
+}
+
+// ─── Products Data ────────────────────────
+const allProducts=[
+  {id:1,name:'Rolex Submariner',brand:'Rolex',price:850000,old:950000,emoji:'⌚',cat:'watch',rating:'★★★★★',stars:5},
+  {id:2,name:'Apple Watch Ultra 2',brand:'Apple',price:89900,old:99900,emoji:'⌚',cat:'watch',rating:'★★★★★',stars:5},
+  {id:3,name:'Samsung Galaxy Watch 7',brand:'Samsung',price:34999,old:39999,emoji:'⌚',cat:'watch',rating:'★★★★☆',stars:4},
+  {id:4,name:'Fossil Gen 7',brand:'Fossil',price:22999,old:28000,emoji:'⌚',cat:'watch',rating:'★★★★☆',stars:4},
+  {id:5,name:'iPhone 16 Pro Max',brand:'Apple',price:159900,old:174900,emoji:'📱',cat:'mobile',rating:'★★★★★',stars:5},
+  {id:6,name:'Samsung S24 Ultra',brand:'Samsung',price:134999,old:149999,emoji:'📱',cat:'mobile',rating:'★★★★★',stars:5},
+  {id:7,name:'OnePlus 13',brand:'OnePlus',price:69999,old:79999,emoji:'📱',cat:'mobile',rating:'★★★★☆',stars:4},
+  {id:8,name:'Google Pixel 9 Pro',brand:'Google',price:109999,old:119999,emoji:'📱',cat:'mobile',rating:'★★★★★',stars:5},
+  {id:9,name:'Samsung 2T Inverter AC',brand:'Samsung',price:45999,old:55999,emoji:'❄️',cat:'ac',rating:'★★★★☆',stars:4},
+  {id:10,name:'Daikin Split 1.5T',brand:'Daikin',price:38999,old:46000,emoji:'❄️',cat:'ac',rating:'★★★★★',stars:5},
+  {id:11,name:'Voltas 1T Star 5',brand:'Voltas',price:29999,old:35000,emoji:'❄️',cat:'ac',rating:'★★★★☆',stars:4},
+  {id:12,name:'LG Dual Inverter AC',brand:'LG',price:42999,old:49999,emoji:'❄️',cat:'ac',rating:'★★★★☆',stars:4},
+  {id:13,name:'Dell XPS 15',brand:'Dell',price:134999,old:149999,emoji:'💻',cat:'laptop',rating:'★★★★★',stars:5},
+  {id:14,name:'MacBook Pro M3',brand:'Apple',price:199900,old:219900,emoji:'💻',cat:'laptop',rating:'★★★★★',stars:5},
+  {id:15,name:'ASUS ROG Zephyrus',brand:'ASUS',price:179999,old:199999,emoji:'💻',cat:'laptop',rating:'★★★★☆',stars:4},
+  {id:16,name:'Sony WH-1000XM6',brand:'Sony',price:34990,old:39990,emoji:'🎧',cat:'headphone',rating:'★★★★★',stars:5},
+  {id:17,name:'Apple AirPods Pro 2',brand:'Apple',price:24900,old:29900,emoji:'🎧',cat:'headphone',rating:'★★★★★',stars:5},
+  {id:18,name:'Canon EOS R50',brand:'Canon',price:74999,old:84999,emoji:'📷',cat:'camera',rating:'★★★★☆',stars:4},
+  {id:19,name:'Sony Alpha 7 IV',brand:'Sony',price:219999,old:249999,emoji:'📷',cat:'camera',rating:'★★★★★',stars:5},
+  {id:20,name:'LG OLED C4 65"',brand:'LG',price:199999,old:229999,emoji:'📺',cat:'tv',rating:'★★★★★',stars:5},
+  {id:21,name:'Samsung Neo QLED 75"',brand:'Samsung',price:249999,old:279999,emoji:'📺',cat:'tv',rating:'★★★★★',stars:5},
+  {id:22,name:'iPad Air M3',brand:'Apple',price:79900,old:89900,emoji:'📲',cat:'tablet',rating:'★★★★★',stars:5},
+  {id:23,name:'Samsung Galaxy Tab S9',brand:'Samsung',price:74999,old:84999,emoji:'📲',cat:'tablet',rating:'★★★★☆',stars:4},
+];
+
+let cart={},wishlist=new Set(),couponApplied=false,currentCat='all';
+
+function fmt(n){return '₹'+n.toLocaleString('en-IN')}
+function renderProducts(filter='',catFilter=null){
+  const cat=catFilter||currentCat;
+  const grid=document.getElementById('productsGrid');
+  const q=filter.toLowerCase();
+  const list=allProducts.filter(p=>{
+    const catOk=cat==='all'||p.cat===cat;
+    const qOk=!q||p.name.toLowerCase().includes(q)||p.brand.toLowerCase().includes(q);
+    return catOk&&qOk;
+  });
+  grid.innerHTML=list.map((p,i)=>`
+    <div class="product-card" style="animation-delay:${i*0.05}s">
+      <div class="card-img">
+        ${p.emoji}
+        <div class="card-wish${wishlist.has(p.id)?' active':''}" onclick="toggleWish(${p.id},event)">
+          ${wishlist.has(p.id)?'❤️':'🤍'}
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">${p.name}</div>
+        <div class="card-brand">${p.brand}</div>
+        <div>
+          <span class="card-price">${fmt(p.price)}</span>
+          <span class="card-old">${fmt(p.old)}</span>
+        </div>
+        <div class="card-rating">${p.rating}</div>
+        <button class="add-cart-btn" onclick="addToCart(${p.id})">Add to Cart</button>
+      </div>
+    </div>
+  `).join('');
+}
+function filterCat(cat,btn){
+  currentCat=cat;
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts(document.getElementById('searchInput').value,cat);
+}
+function filterProducts(){
+  renderProducts(document.getElementById('searchInput').value);
+}
+
+// ─── Cart ─────────────────────────────────
+function addToCart(id){
+  if(cart[id]) cart[id].qty++;
+  else{const p=allProducts.find(x=>x.id===id);cart[id]={...p,qty:1}}
+  updateCartBadge();
+  renderCart();
+  showToast(`Added to cart! 🛒`);
+}
+function updateCartBadge(){
+  const total=Object.values(cart).reduce((a,i)=>a+i.qty,0);
+  document.getElementById('cartBadge').textContent=total||0;
+}
+function renderCart(){
+  const body=document.getElementById('cartBody');
+  const items=Object.values(cart);
+  if(!items.length){body.innerHTML='<p style="color:rgba(200,214,229,0.4);text-align:center;padding:30px;font-size:0.85rem">Your cart is empty 😢</p>';renderCartTotal();return;}
+  body.innerHTML=items.map(i=>`
+    <div class="cart-item">
+      <div class="cart-img">${i.emoji}</div>
+      <div class="cart-info">
+        <div class="cart-name">${i.name}</div>
+        <div class="cart-price">${fmt(i.price)}</div>
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(${i.id},-1)">−</button>
+          <span class="qty-num">${i.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${i.id},1)">+</button>
+          <button class="remove-btn" onclick="removeCart(${i.id})">✕ Remove</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  renderCartTotal();
+}
+function changeQty(id,d){
+  if(cart[id]){
+    cart[id].qty+=d;
+    if(cart[id].qty<=0) delete cart[id];
+  }
+  updateCartBadge();renderCart();
+}
+function removeCart(id){delete cart[id];updateCartBadge();renderCart();}
+function cartSubtotal(){return Object.values(cart).reduce((a,i)=>a+i.price*i.qty,0)}
+function renderCartTotal(){
+  const sub=cartSubtotal();
+  const disc=couponApplied?sub*0.18:0;
+  const tax=Math.round((sub-disc)*0.05);
+  const total=sub-disc+tax;
+  document.getElementById('cartTotal').innerHTML=`
+    <div class="total-row"><span>Subtotal</span><span>${fmt(sub)}</span></div>
+    ${couponApplied?`<div class="total-row" style="color:#27ae60"><span>Discount (18%)</span><span>− ${fmt(Math.round(disc))}</span></div>`:''}
+    <div class="total-row"><span>GST (5%)</span><span>${fmt(tax)}</span></div>
+    <div class="total-row big"><span>Total</span><span>${fmt(Math.round(total))}</span></div>
+  `;
+}
+function applyCoupon(){
+  const code=document.getElementById('couponInput').value.trim().toUpperCase();
+  const suc=document.getElementById('couponSuccess');
+  if(code==='HEAVEN45'){
+    couponApplied=true;
+    suc.style.display='block';
+    renderCartTotal();
+    showToast('Coupon HEAVEN45 applied! 18% off 🎉');
+  } else {
+    suc.style.display='none';
+    couponApplied=false;
+    renderCartTotal();
+    showToast('Invalid coupon code ❌');
+  }
+}
+
+// ─── Wishlist ─────────────────────────────
+function toggleWish(id,e){
+  e.stopPropagation();
+  if(wishlist.has(id)) wishlist.delete(id);
+  else wishlist.add(id);
+  document.getElementById('wishBadge').textContent=wishlist.size||0;
+  renderProducts(document.getElementById('searchInput').value);
+  renderWishlist();
+  showToast(wishlist.has(id)?'Added to wishlist ❤️':'Removed from wishlist');
+}
+function renderWishlist(){
+  const body=document.getElementById('wishBody');
+  const items=allProducts.filter(p=>wishlist.has(p.id));
+  if(!items.length){body.innerHTML='<p style="color:rgba(200,214,229,0.4);text-align:center;padding:30px;font-size:0.85rem">Your wishlist is empty.<br>Tap ❤️ on any product!</p>';return;}
+  body.innerHTML=items.map(p=>`
+    <div class="cart-item">
+      <div class="cart-img">${p.emoji}</div>
+      <div class="cart-info">
+        <div class="cart-name">${p.name}</div>
+        <div class="cart-price">${fmt(p.price)}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <button class="add-cart-btn" style="padding:6px 12px;font-size:0.7rem" onclick="addToCart(${p.id})">Add Cart</button>
+        <button class="remove-btn" onclick="toggleWish(${p.id},{stopPropagation:()=>{}})">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── Checkout / Bill ──────────────────────
+function openCheckout(){
+  closePanels();
+  const items=Object.values(cart);
+  if(!items.length){showToast('Cart is empty!');return;}
+  const sub=cartSubtotal();
+  const disc=couponApplied?sub*0.18:0;
+  const tax=Math.round((sub-disc)*0.05);
+  const total=Math.round(sub-disc+tax);
+  document.getElementById('billSection').innerHTML=`
+    <div class="bill-title">🧾 Order Summary</div>
+    ${items.map(i=>`<div class="bill-item-row"><span>${i.emoji} ${i.name} ×${i.qty}</span><span>${fmt(i.price*i.qty)}</span></div>`).join('')}
+    <div class="bill-item-row"><span>Subtotal</span><span>${fmt(sub)}</span></div>
+    ${couponApplied?`<div class="bill-item-row" style="color:#27ae60"><span>Coupon HEAVEN45</span><span>−${fmt(Math.round(disc))}</span></div>`:''}
+    <div class="bill-item-row"><span>GST 5%</span><span>${fmt(tax)}</span></div>
+    <div class="bill-item-row" style="font-weight:700;color:var(--silver-bright);border-bottom:none;padding-top:8px"><span>Total Payable</span><span>${fmt(total)}</span></div>
+  `;
+  openPanel('checkoutPanel');
+}
+function selectPay(el){
+  document.querySelectorAll('.pay-method').forEach(m=>m.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('cardDetails').style.display=el.querySelector('.pay-name').textContent==='Card'?'block':'none';
+}
+function fmtCard(el){el.value=el.value.replace(/\D/g,'').replace(/(\d{4})/g,'$1 ').trim().slice(0,19)}
+function completePay(){
+  cart={};
+  couponApplied=false;
+  document.getElementById('couponInput').value='';
+  document.getElementById('couponSuccess').style.display='none';
+  updateCartBadge();
+  renderCart();
+  closePanels();
+  showToast('🎉 Payment Successful! Order Confirmed!');
+}
+
+// ─── Panels ───────────────────────────────
+function openPanel(id){
+  closePanels(false);
+  document.getElementById(id).classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+  if(id==='cartPanel') renderCart();
+  if(id==='wishPanel') renderWishlist();
+}
+function closePanels(hideOverlay=true){
+  document.querySelectorAll('.side-panel').forEach(p=>p.classList.remove('open'));
+  if(hideOverlay) document.getElementById('overlay').classList.remove('show');
+}
+
+// ─── Settings ─────────────────────────────
+function toggleSw(el){el.classList.toggle('on')}
+
+// ─── Profile ──────────────────────────────
+function uploadImg(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const img=document.getElementById('profileImg');
+    img.src=e.target.result;img.style.display='block';
+    document.getElementById('profileEmoji').style.display='none';
+    // Update avatar btn too
+    document.getElementById('avatarBtn').innerHTML=`<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+  };
+  reader.readAsDataURL(file);
+}
+function saveProfile(){
+  const name=document.getElementById('editName').value;
+  const email=document.getElementById('editEmail').value;
+  document.getElementById('profileName').textContent=name;
+  document.getElementById('profileEmail').textContent=email;
+  closePanels();
+  showToast('Profile updated! ✅');
+}
+
+// ─── Toast ────────────────────────────────
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ─── AI Chatbot (Nest) ────────────────────
+let chatOpen=false;
+function toggleChat(){
+  chatOpen=!chatOpen;
+  document.getElementById('chatWindow').classList.toggle('open',chatOpen);
+  if(chatOpen) document.getElementById('chatInput').focus();
+}
+
+function addBotMsg(text,typing=false){
+  const msgs=document.getElementById('chatMsgs');
+  if(typing){
+    const el=document.createElement('div');
+    el.className='msg bot';el.id='typingIndicator';
+    el.innerHTML=`<div class="typing"><span></span><span></span><span></span></div>`;
+    msgs.appendChild(el);msgs.scrollTop=msgs.scrollHeight;
+    return el;
+  }
+  const el=document.createElement('div');
+  el.className='msg bot';el.textContent=text;
+  msgs.appendChild(el);msgs.scrollTop=msgs.scrollHeight;
+}
+function addUserMsg(text){
+  const msgs=document.getElementById('chatMsgs');
+  const el=document.createElement('div');
+  el.className='msg user';el.textContent=text;
+  msgs.appendChild(el);msgs.scrollTop=msgs.scrollHeight;
+}
+
+const nestReplies={
+  'hello':["Hi there! 👋 Welcome to Heaven Store! How can I help you today?","Hello! I'm Nest, your Heaven AI assistant 🌟 What can I do for you?"],
+  'hi':["Hey! Great to see you 😊 I'm Nest — ready to help!","Hi! Welcome back to Heaven Store ✨"],
+  'product':["We have amazing products! From luxury watches ⌚ to the latest mobiles 📱, ACs ❄️, laptops 💻 and more! Use code HEAVEN45 for 18% off!"],
+  'watch':["Our watch collection includes Rolex Submariner, Apple Watch Ultra 2, Samsung Galaxy Watch 7 and more! ⌚ All with premium quality."],
+  'mobile':["Top mobiles available: iPhone 16 Pro Max 📱, Samsung S24 Ultra, OnePlus 13, and Google Pixel 9 Pro — all at competitive prices!"],
+  'ac':["Beat the heat with our AC range ❄️ — Samsung Inverter, Daikin Split, Voltas Star 5, and LG Dual Inverter. Best prices guaranteed!"],
+  'laptop':["Power-packed laptops: Dell XPS 15 💻, MacBook Pro M3, and ASUS ROG Zephyrus. Perfect for work and gaming!"],
+  'coupon':["🏷️ Use coupon code **HEAVEN45** for flat 18% off! Valid until May 30th. Apply it in your cart!","Great news! Enter HEAVEN45 at checkout for 18% discount 🎉 Offer ends May 30!"],
+  'discount':["Use our exclusive coupon HEAVEN45 for 18% off! 🎁 Also check the flash sales banner for more deals!"],
+  'offer':["🔥 Current offers: HEAVEN45 coupon for 18% off, Flash sale on iPhone 16 Pro (22% off), and cashback on Dell laptops!"],
+  'cart':["You can view your cart by clicking the 🛒 icon in the top right. Add items and apply coupon HEAVEN45 for 18% off!"],
+  'pay':["We accept Credit/Debit Cards 💳, UPI/GPay 📱, Net Banking 🏦, and Cash on Delivery 💵 — all secure and instant!"],
+  'help':["I can help with: 🛍️ Product info, 🏷️ Deals & coupons, 🛒 Cart issues, 💳 Payment options, and 📦 Order queries. Just ask!"],
+  'price':["Prices at Heaven are always competitive! Plus use HEAVEN45 for 18% off. Type a product name and I'll tell you more!"],
+  'delivery':["📦 We deliver across India! Express delivery in 1-2 days for most cities. Free delivery on orders above ₹999!"],
+  'return':["Our return policy is 30 days 🔄 for most electronics. Simply contact support or use the app to initiate a return!"],
+  'default':["Great question! I'm Nest 🤖 and I'm here to help with anything at Heaven Store.","Let me look into that for you! Meanwhile, check out our trending products and use HEAVEN45 for 18% off 🎁","I'd love to help! Could you be more specific? You can ask me about products, deals, cart, payments, or delivery 😊"]
+};
+
+async function sendMsg(){
+  const input=document.getElementById('chatInput');
+  const text=input.value.trim();if(!text)return;
+  addUserMsg(text);input.value='';
+  const typingEl=addBotMsg('',true);
+  setTimeout(()=>{
+    if(typingEl) typingEl.remove();
+    const lower=text.toLowerCase();
+    let reply=null;
+    for(const key of Object.keys(nestReplies)){
+      if(key!=='default'&&lower.includes(key)){
+        const r=nestReplies[key];
+        reply=Array.isArray(r)?r[Math.floor(Math.random()*r.length)]:r;
+        break;
+      }
+    }
+    if(!reply){const r=nestReplies['default'];reply=r[Math.floor(Math.random()*r.length)];}
+    // Try Anthropic API
+    callNestAPI(text).then(apiReply=>{
+      if(apiReply) addBotMsg(apiReply);
+      else addBotMsg(reply);
+    }).catch(()=>addBotMsg(reply));
+  },900+Math.random()*500);
+}
+
+async function callNestAPI(userMsg){
+  try{
+    const sys=`You are Nest, a friendly and helpful AI shopping assistant for Heaven Store — a premium e-commerce platform selling watches, mobiles, ACs, laptops, headphones, cameras, TVs, and tablets. You help users find products, apply coupons, and shop better. Active coupon: HEAVEN45 for 18% off until May 30. Keep responses concise, warm, and helpful. Use relevant emojis sparingly.`;
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,system:sys,messages:[{role:'user',content:userMsg}]})
+    });
+    const data=await res.json();
+    return data.content?.[0]?.text||null;
+  }catch{return null;}
+}
+</script>
+</body>
+</html>
